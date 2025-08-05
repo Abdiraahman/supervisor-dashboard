@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom'
 import { Bell, Search } from 'lucide-react'
 
-const Header = () => {
+const Header = (): React.JSX.Element => {
   const location = useLocation()
   
-  const getPageTitle = () => {
+  const getPageTitle = (): string => {
     const path = location.pathname
     switch (path) {
       case '/':
@@ -24,7 +24,7 @@ const Header = () => {
     }
   }
 
-  const getWelcomeMessage = () => {
+  const getWelcomeMessage = (): string => {
     const title = getPageTitle()
     if (title === 'Dashboard') {
       return 'Welcome, Industry Supervisor!'

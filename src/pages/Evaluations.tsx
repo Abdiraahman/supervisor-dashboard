@@ -1,11 +1,22 @@
 import { useState } from 'react'
 import { Search, Filter, Plus, Eye, Edit, Download } from 'lucide-react'
 
-const Evaluations = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterStatus, setFilterStatus] = useState('all')
+interface Evaluation {
+  id: number
+  studentName: string
+  evaluationType: string
+  dueDate: string
+  submittedDate?: string
+  status: 'pending' | 'completed' | 'overdue'
+  score?: number
+  feedback?: string
+}
 
-  const evaluations = [
+const Evaluations = (): React.JSX.Element => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+
+  const evaluations: Evaluation[] = [
     {
       id: 1,
       studentName: 'John Doe',
@@ -21,10 +32,10 @@ const Evaluations = () => {
       studentName: 'Jane Smith',
       evaluationType: 'Final Assessment',
       dueDate: '2024-08-15',
-      submittedDate: null,
+      submittedDate: undefined,
       status: 'pending',
-      score: null,
-      feedback: null
+      score: undefined,
+      feedback: undefined
     },
     {
       id: 3,
@@ -42,19 +53,19 @@ const Evaluations = () => {
       evaluationType: 'Mid-term Assessment',
       dueDate: '2024-08-01',
       submittedDate: '2024-07-30',
-      status: 'under_review',
-      score: null,
-      feedback: null
+      status: 'pending',
+      score: undefined,
+      feedback: undefined
     },
     {
       id: 5,
       studentName: 'David Brown',
       evaluationType: 'Final Assessment',
       dueDate: '2024-08-20',
-      submittedDate: null,
-      status: 'draft',
-      score: null,
-      feedback: null
+      submittedDate: undefined,
+      status: 'pending',
+      score: undefined,
+      feedback: undefined
     }
   ]
 
@@ -244,7 +255,7 @@ const Evaluations = () => {
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="text-2xl font-bold text-blue-600">
-            {evaluations.filter(e => e.status === 'under_review').length}
+            {evaluations.filter(e => e.status === 'pending').length}
           </div>
           <div className="text-sm text-gray-600">Under Review</div>
         </div>

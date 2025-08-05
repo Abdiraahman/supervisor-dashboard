@@ -8,7 +8,7 @@ import Settings from './pages/Settings'
 import UpdateProfile from './pages/UpdateProfile'
 import './App.css'
 
-function App() {
+function App(): React.JSX.Element {
   return (
     <Router>
       <Routes>

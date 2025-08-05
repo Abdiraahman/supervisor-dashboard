@@ -11,11 +11,26 @@ import {
   X
 } from 'lucide-react'
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const location = useLocation()
+interface SidebarProps {
+  isCollapsed?: boolean
+  onToggle?: () => void
+}
 
-  const navigationItems = [
+interface NavigationItem {
+  name: string
+  path: string
+  icon: React.ComponentType<{ size?: number }>
+}
+
+const Sidebar = ({ isCollapsed: propIsCollapsed, onToggle }: SidebarProps): React.JSX.Element => {
+  const [internalIsCollapsed, setInternalIsCollapsed] = useState<boolean>(false)
+  const location = useLocation()
+  
+  // Use prop if provided, otherwise use internal state
+  const isCollapsed = propIsCollapsed !== undefined ? propIsCollapsed : internalIsCollapsed
+  const toggleCollapsed = onToggle || (() => setInternalIsCollapsed(!internalIsCollapsed))
+
+  const navigationItems: NavigationItem[] = [
     { name: 'Dashboard', path: '/', icon: Home },
     { name: 'Students', path: '/students', icon: Users },
     { name: 'Evaluations', path: '/evaluations', icon: ClipboardList },
@@ -23,7 +38,7 @@ const Sidebar = () => {
     { name: 'Settings', path: '/settings', icon: Settings },
   ]
 
-  const isActive = (path) => {
+  const isActive = (path: string): boolean => {
     return location.pathname === path
   }
 
@@ -33,7 +48,7 @@ const Sidebar = () => {
       {!isCollapsed && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsCollapsed(true)}
+          onClick={() => onToggle ? onToggle() : setInternalIsCollapsed(true)}
         />
       )}
       
@@ -57,7 +72,7 @@ const Sidebar = () => {
           )}
           
           <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={toggleCollapsed}
             className="p-2 rounded-lg hover:bg-slate-800 transition-colors lg:hidden"
           >
             {isCollapsed ? <Menu size={20} /> : <X size={20} />}
@@ -78,7 +93,7 @@ const Sidebar = () => {
                         ? 'bg-blue-600 text-white shadow-lg'
                         : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                     }`}
-                    onClick={() => window.innerWidth < 1024 && setIsCollapsed(true)}
+                    onClick={() => window.innerWidth < 1024 && (onToggle ? onToggle() : setInternalIsCollapsed(true))}
                   >
                     <Icon size={20} />
                     {!isCollapsed && <span className="font-medium">{item.name}</span>}
@@ -100,7 +115,7 @@ const Sidebar = () => {
 
       {/* Toggle button for desktop */}
       <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={toggleCollapsed}
         className="fixed top-4 left-4 z-30 p-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors hidden lg:block"
       >
         <Menu size={20} />

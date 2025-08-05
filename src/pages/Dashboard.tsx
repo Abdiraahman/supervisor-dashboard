@@ -1,7 +1,16 @@
 import { Users, ClipboardList, MessageSquare, TrendingUp } from 'lucide-react'
 
-const Dashboard = () => {
-  const stats = [
+interface Stat {
+  title: string
+  value: string
+  change: string
+  changeType: 'positive' | 'negative'
+  icon: React.ComponentType<{ size?: number; className?: string }>
+  color: string
+}
+
+const Dashboard = (): React.JSX.Element => {
+  const stats: Stat[] = [
     {
       title: 'Total Students',
       value: '24',

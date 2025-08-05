@@ -3,8 +3,8 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
 
-const Layout = () => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+const Layout = (): React.JSX.Element => {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false)
 
   return (
     <div className="min-h-screen bg-gray-50">

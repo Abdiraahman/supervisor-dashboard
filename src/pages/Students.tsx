@@ -1,11 +1,23 @@
 import { useState } from 'react'
 import { Search, Filter, Plus, Eye, Edit, Trash2 } from 'lucide-react'
 
-const Students = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterStatus, setFilterStatus] = useState('all')
+interface Student {
+  id: number
+  name: string
+  email: string
+  university: string
+  course: string
+  startDate: string
+  endDate: string
+  status: 'active' | 'completed' | 'pending'
+  progress: number
+}
 
-  const students = [
+const Students = (): React.JSX.Element => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+
+  const students: Student[] = [
     {
       id: 1,
       name: 'John Doe',

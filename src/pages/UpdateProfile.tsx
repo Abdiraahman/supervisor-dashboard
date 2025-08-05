@@ -2,17 +2,27 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Building, User, Phone, Save, ArrowLeft } from 'lucide-react'
 
-const UpdateProfile = () => {
+interface FormData {
+  companyName: string
+  position: string
+  phoneNumber: string
+}
+
+interface Errors {
+  [key: string]: string
+}
+
+const UpdateProfile = (): React.JSX.Element => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     companyName: '',
     position: '',
     phoneNumber: ''
   })
-  const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [errors, setErrors] = useState<Errors>({})
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
@@ -21,7 +31,7 @@ const UpdateProfile = () => {
   }
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: Errors = {}
     
     if (!formData.companyName.trim()) {
       newErrors.companyName = 'Company name is required'

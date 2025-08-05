@@ -1,11 +1,28 @@
 import { useState } from 'react'
 import { Search, Send, Paperclip, MoreVertical } from 'lucide-react'
 
-const Messages = () => {
-  const [selectedConversation, setSelectedConversation] = useState(1)
-  const [newMessage, setNewMessage] = useState('')
+interface Conversation {
+  id: number
+  name: string
+  lastMessage: string
+  timestamp: string
+  unread: number
+  avatar: string
+}
 
-  const conversations = [
+interface Message {
+  id: number
+  sender: string
+  content: string
+  timestamp: string
+  isOwn: boolean
+}
+
+const Messages = (): React.JSX.Element => {
+  const [selectedConversation, setSelectedConversation] = useState<number>(1)
+  const [newMessage, setNewMessage] = useState<string>('')
+
+  const conversations: Conversation[] = [
     {
       id: 1,
       name: 'John Doe',
@@ -40,7 +57,7 @@ const Messages = () => {
     }
   ]
 
-  const messages = {
+  const messages: { [key: number]: Message[] } = {
     1: [
       {
         id: 1,

@@ -1,9 +1,38 @@
 import { useState } from 'react'
 import { Save, Bell, Shield, User, Mail, Phone, Building } from 'lucide-react'
 
-const Settings = () => {
-  const [activeTab, setActiveTab] = useState('profile')
-  const [profileData, setProfileData] = useState({
+interface ProfileData {
+  name: string
+  email: string
+  phone: string
+  company: string
+  position: string
+  bio: string
+}
+
+interface NotificationSettings {
+  emailNotifications: boolean
+  pushNotifications: boolean
+  studentMessages: boolean
+  evaluationReminders: boolean
+  systemUpdates: boolean
+}
+
+interface SecuritySettings {
+  twoFactorAuth: boolean
+  sessionTimeout: string
+  loginAlerts: boolean
+}
+
+interface Tab {
+  id: string
+  name: string
+  icon: React.ComponentType<{ size?: number }>
+}
+
+const Settings = (): React.JSX.Element => {
+  const [activeTab, setActiveTab] = useState<string>('profile')
+  const [profileData, setProfileData] = useState<ProfileData>({
     name: 'Industry Supervisor',
     email: 'supervisor@company.com',
     phone: '+1 (555) 123-4567',
@@ -12,7 +41,7 @@ const Settings = () => {
     bio: 'Experienced software engineer with 10+ years in the industry, passionate about mentoring students.'
   })
 
-  const [notificationSettings, setNotificationSettings] = useState({
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
     emailNotifications: true,
     pushNotifications: true,
     studentMessages: true,
@@ -20,13 +49,13 @@ const Settings = () => {
     systemUpdates: false
   })
 
-  const [securitySettings, setSecuritySettings] = useState({
+  const [securitySettings, setSecuritySettings] = useState<SecuritySettings>({
     twoFactorAuth: false,
     sessionTimeout: '30',
     loginAlerts: true
   })
 
-  const tabs = [
+  const tabs: Tab[] = [
     { id: 'profile', name: 'Profile', icon: User },
     { id: 'notifications', name: 'Notifications', icon: Bell },
     { id: 'security', name: 'Security', icon: Shield }
